@@ -2,58 +2,76 @@ import express from "express";
 import cors from 'cors'
 import multer from 'multer'
 import mongoose from 'mongoose'
-// import Content from './../share-content/src/Content';
+import path from 'path';
+
 
 const app = express();
-const port =4001;
+const port = 8006;
 app.use(express.json());
 app.use(cors({
     origin:'http://localhost:5173'
   }));
-app.use(express.static('uploads'));
+app.use('/uploads',express.static('uploads'));
 
 
 mongoose.connect('mongodb://localhost:27017/excelData').then(() => console.log('MongoDB connected'))
 .catch(err => console.error(' error', err));
 
-const storage = multer.memoryStorage();
+const storage = multer.diskStorage({
+    destination:(req,file,cb)=>{
+        cb(null,'uploads')
+    },
+    filename:(req,file,cb)=>{
+        const uniqueFile = Date.now()
+        cb(null,uniqueFile + file.originalname)
+    }
+});
 const upload = multer({ storage });
 
 const ContentSchema = new mongoose.Schema({
-    id:{
-        type:String,
-        required:true
-    },
+  
     title:{
         type:String,
-        require:true,
+        required:true,
     },
+
     image:{
         type:String,
-        require:true
+        required:true
     }
 });
 
 const dataContent = mongoose.model('dataContent',ContentSchema);
 
-app.get('/upload', async(req,res)=>{
-    // const {id,title,image} = req.body.params
-    const data = await dataContent.find()
-   res.status(200).json(data)
-
-})
 
 app.post("/upload",upload.single('image'),async(req,res)=>{
-    
+    console.log(req.file)
+   try{
     const content = new dataContent({
-        id:req.body.id,
         title:req.body.title,
-        image:req.body.path
+        image:req.file.filename
     })
     await content.save()
     res.status(200).json(content)
-    
-});
+   } catch(err){
+    res.status(400).json({'error saving content':err})
+   }
+ 
+    });
+
+app.get('/upload', async(req,res)=>{
+    try{
+        const fullData = await dataContent.find()
+        res.status(200).json(fullData)
+     
+    }catch(err){
+        res.status(400).json({err:'error fetching data'})
+    }
+   
+})
+
+
+
 
 app.listen(port,()=>{
     console.log('server started')

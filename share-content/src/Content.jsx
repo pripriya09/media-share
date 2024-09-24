@@ -39,7 +39,7 @@ useEffect(() => {
           <div key={content.id} className="share">
             <h3>{content.title}</h3>
             <p>{content.body}</p>
-            <button onClick={() => handleShareData(content.title, content.body)}>
+            <button onClick={() => handleShareData(content.id,content.title, content.body)}>
               shareContent:fb/in
             </button>
           </div>
