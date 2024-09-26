@@ -30,15 +30,33 @@ function handleClick(event) {
   .then((res) => {
       console.log(res.data);
       setContentData(befDATA => [...befDATA, res.data]); 
+      setTitle("")
+      setImage(null)
   })
   .catch((err) => {
-      console.error('Error submitting data:', err);
+      console.error('ErrorSubmitting data:', err);
   });
 }
 
-async function fetchContent() {
-  try {
-    const res = await axios.get('http://localhost:8006/upload');
+// async function fetchContent() {
+//   try {
+//     const res = await axios.get('http://localhost:8006/upload');
+//     if (Array.isArray(res.data)) {
+//       setContentData(res.data);
+     
+//       console.log('data upload',res.data)
+//     } else {
+//       console.error('Unexpected data format:', res.data);
+//     }
+//   } catch (err) {
+//     console.error('ErrorFetching content:', err);
+//   }
+// }
+
+ function fetchContent() {
+
+   axios.get('http://localhost:8006/upload')
+   .then((res)=>{
     if (Array.isArray(res.data)) {
       setContentData(res.data);
      
@@ -46,22 +64,32 @@ async function fetchContent() {
     } else {
       console.error('Unexpected data format:', res.data);
     }
-  } catch (err) {
-    console.error('ErrorFetching content:', err);
-  }
+   })
+    .catch ((err)=>{
+      console.error('ErrorFetching content:', err);
+    }) 
+  
+  
 }
 
-async function handleShare(cont){
-  const postRES =await axios.post("http://localhost:8006/postOnFB",{
+ function handleShare(cont){
+ axios.post("http://localhost:8006/postOnFB",{
      title:cont.title,
      image:cont.image,
   })
-  try{
-    console.log("share post success",postRES.data)
-  }
-  catch(err){
-    console.log({err:'not post'})
-  }
+.then((postRES)=>{
+  console.log("share post success",postRES.data)
+}).catch((err)=>{
+  console.log({err:'not post'})
+})
+
+
+  // try{
+  //   console.log("share post success",postRES.data)
+  // }
+  // catch(err){
+  //   console.log({err:'not post'})
+  // }
 
 }
 
@@ -79,8 +107,7 @@ async function handleShare(cont){
     <div className="item">
     <h1>post</h1>
     <div className="share-item">
-        { contendData == null  ? "" 
-        : contendData.map((cont,ind)=>(
+        { contendData.map((cont,ind)=>(
            <div key={ind} className="upload-itm">
             <h3>{cont.title}</h3>
             <img src= {`http://localhost:8006/uploads/${cont.image}`} style={{width:'100px',height:"100px"}} />

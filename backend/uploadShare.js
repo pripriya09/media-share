@@ -3,7 +3,10 @@ import cors from 'cors'
 import multer from 'multer'
 import mongoose from 'mongoose'
 import path from 'path';
+import dotenv from 'dotenv';
 
+
+dotenv.config()
 
 const app = express();
 const port = 8006;
@@ -68,13 +71,11 @@ app.get('/upload', async(req,res)=>{
         res.status(400).json({err:'error fetching data'})
     }
    
-})
-
-
+});
 app.post('/postOnFB',async(req,res)=>{
     const {title,image} =req.body 
-    const PageAccess_token ='EAAMgZBQtlcZA4BOw9KyBWrz6UZAqdqRuCiCTXGrcNsnnxZA1ZCagQMclmK81vZCQuq5dNbPxi7nWxbY3Lac1lzvJIuDMhkxYckqWSdKeNl8jtzl73PJfPpD38P6oOe1ZBStz1jaxTsGskTEZBvw1HLNIS8yXgvHMCnKFb3mH4lBf30tgMnccDjtAk3329igmjkzM7cBiRqWd5QoPWHzTDbmSVHGFyWLptHSTnwkPtZAnuvSM857SoAMR4E1KU0SRlUwZDZD'
-    const page_ID =122096806772549805n
+const PageAccess_token = 'EAAMdXvOXwUYBO5khSKpy1oTv0a8eUe65dfqD4PH90U0ZC4VGoak3oNzzsUZBxcdNqynBAXSdhNluJel8ZCnqbxdnghZAc3ZCQ2TZBZA9W6CL3KFbTQChiwHFd6ZASSrBCcdEdW79hkmVnPLhyNKQoKCRS3LurWtmoWWkhfbBzgKCijcnxYHHnIxfRaqYpr1LMhlAugZDZD' ;
+    const page_ID = '876718581072198' ;
 
     try{
         const titlePost =await axios.post(`https://graph.facebook.com/${page_ID}/feed`,{
@@ -86,10 +87,14 @@ app.post('/postOnFB',async(req,res)=>{
       const ImagePath =`http://localhost:8006/uploads/${image}`;
       await axios.post(`https://graph.facebook.com/${page_ID}/photo`,{
         url:ImagePath,
-        access_token: PageAccess_token
+        access_token: PageAccess_token,
+
       });
         }
-        res.status(200).json("post successfullyUpload");
+        console.log(titlePost);
+        console.log(ImagePath)
+        // res.status(200).json("post successfullyUpload",titlePost);
+        res.send(titlePost)
     }
     catch(err){
         res.status(400).json({err:'post error'})

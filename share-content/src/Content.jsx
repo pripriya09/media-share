@@ -22,11 +22,11 @@ useEffect(() => {
   }, []);
 
   const handleShareData = (title, body) => {
-    const facebookShare = 'http://www.facebook.com/tgsanetechnologies'
+    const facebookShare = 'https://www.facebook.com/tgsanetechnologies'
     window.open(facebookShare);
 
-    const InstagramShare ='http://www.instagram.com/tgsanetechnologies/'
-     window.open(InstagramShare);
+    // const InstagramShare ='http://www.instagram.com/tgsanetechnologies/'
+    //  window.open(InstagramShare);
   };
 
 
