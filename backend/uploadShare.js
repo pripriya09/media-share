@@ -71,6 +71,30 @@ app.get('/upload', async(req,res)=>{
 })
 
 
+app.post('/postOnFB',async(req,res)=>{
+    const {title,image} =req.body 
+    const PageAccess_token ='EAAMgZBQtlcZA4BOw9KyBWrz6UZAqdqRuCiCTXGrcNsnnxZA1ZCagQMclmK81vZCQuq5dNbPxi7nWxbY3Lac1lzvJIuDMhkxYckqWSdKeNl8jtzl73PJfPpD38P6oOe1ZBStz1jaxTsGskTEZBvw1HLNIS8yXgvHMCnKFb3mH4lBf30tgMnccDjtAk3329igmjkzM7cBiRqWd5QoPWHzTDbmSVHGFyWLptHSTnwkPtZAnuvSM857SoAMR4E1KU0SRlUwZDZD'
+    const page_ID =122096806772549805n
+
+    try{
+        const titlePost =await axios.post(`https://graph.facebook.com/${page_ID}/feed`,{
+            message:title,
+            access_token:PageAccess_token,
+        });
+
+        if(image){
+      const ImagePath =`http://localhost:8006/uploads/${image}`;
+      await axios.post(`https://graph.facebook.com/${page_ID}/photo`,{
+        url:ImagePath,
+        access_token: PageAccess_token
+      });
+        }
+        res.status(200).json("post successfullyUpload");
+    }
+    catch(err){
+        res.status(400).json({err:'post error'})
+    }
+})
 
 
 app.listen(port,()=>{

@@ -3,6 +3,7 @@ import axios from 'axios'
 import './share.css'
 
 
+
 function Share() {
 const [contendData,setContentData] =useState([]);
 const [title,setTitle] =useState('');
@@ -28,7 +29,7 @@ function handleClick(event) {
   })
   .then((res) => {
       console.log(res.data);
-      setContentData(prevData => [...prevData, res.data]); 
+      setContentData(befDATA => [...befDATA, res.data]); 
   })
   .catch((err) => {
       console.error('Error submitting data:', err);
@@ -40,6 +41,7 @@ async function fetchContent() {
     const res = await axios.get('http://localhost:8006/upload');
     if (Array.isArray(res.data)) {
       setContentData(res.data);
+     
       console.log('data upload',res.data)
     } else {
       console.error('Unexpected data format:', res.data);
@@ -48,10 +50,20 @@ async function fetchContent() {
     console.error('ErrorFetching content:', err);
   }
 }
- function handleShare(){
-  const FacebookShare= 'http://www.facebook.com/tgsanetechnologies'
-  window.open(FacebookShare)
- }
+
+async function handleShare(cont){
+  const postRES =await axios.post("http://localhost:8006/postOnFB",{
+     title:cont.title,
+     image:cont.image,
+  })
+  try{
+    console.log("share post success",postRES.data)
+  }
+  catch(err){
+    console.log({err:'not post'})
+  }
+
+}
 
   return (
     <>
@@ -72,7 +84,7 @@ async function fetchContent() {
            <div key={ind} className="upload-itm">
             <h3>{cont.title}</h3>
             <img src= {`http://localhost:8006/uploads/${cont.image}`} style={{width:'100px',height:"100px"}} />
-            <button onClick={handleShare}>share-and-post:fb/in</button>
+            <button onClick={()=>handleShare(cont)}>share-and-post:fb/in</button>
            </div>
         )
       )}
