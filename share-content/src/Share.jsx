@@ -14,8 +14,8 @@ function Share() {
 
   function handleClick(event) {
     event.preventDefault(); 
-    console.log("Title:", title);
-    console.log("Image:", image);
+    console.log("title:", title);
+    console.log("image:", image);
 
   
     const newDataContent = new FormData();
@@ -59,10 +59,15 @@ function Share() {
 
  
   function handleShare(cont) {
-    const imageUrl = `http://localhost:8006/uploads/${cont.image}`; 
+    // const imageUrl = `http://localhost:8006/uploads/${cont.image}`; 
+    const imageUrl = cont.image; 
+
     
     axios
-      .post("http://192.168.0.38:8006/postOnFB", { 
+      // .post("http://192.168.0.38:8006/postOnFB"
+      .post("http://localhost:8006/postOnFB"
+
+        , { 
         title: cont.title,
         image: imageUrl,
       })
@@ -71,10 +76,38 @@ function Share() {
         alert("Post shared successfully!"); 
       })
       .catch((err) => {
-        console.log("Error sharing post:", err);
-        alert("Failed to share post. Please try again.");
-      });
+        console.error("Error sharing post:", err);
+        if (err.response) {
+            console.error("Response data:", err.response.data); 
+            alert("Error: " + err.response.data.error.message);
+        } else {
+            alert("Failed to share post. Please try again.");
+        }
+    });
+    
+
+          console.log("Posting text:", title)
+      console.log("Posting image URL:", image)
   }
+
+  // function handleShare(cont) {
+  //   const imageUrl = cont.image;
+  
+  //   axios
+  //     .post("http://localhost:8006/postOnFB", {
+  //       title: cont.title,
+  //       image: imageUrl,
+  //     })
+  //     .then((postRES) => {
+  //       console.log("API Test Response:", postRES.data);
+  //       alert("API test success.");
+  //     })
+  //     .catch((err) => {
+  //       console.error("Error testing post:", err);
+  //       alert("Failed to test post.");
+  //     });
+  // }
+  
 
   return (
     <div className="share-container">
@@ -100,7 +133,7 @@ function Share() {
             <div key={ind} className="upload-itm">
               <h3>{cont.title}</h3>
               <img
-                src={`http://localhost:8006/uploads/${cont.image}`} 
+                src={cont.image} 
                 alt={cont.title}
                 style={{ width: "100px", height: "100px" }}
               />
