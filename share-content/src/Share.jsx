@@ -62,10 +62,9 @@ function Share() {
     // const imageUrl = `http://localhost:8006/uploads/${cont.image}`; 
     const imageUrl = cont.image; 
 
-    
     axios
-      // .post("http://192.168.0.38:8006/postOnFB"
-      .post("http://localhost:8006/postOnFB"
+      .post("http://192.168.0.38:8006/postOnFB"
+      // .post("http://localhost:8006/postOnFB"
 
         , { 
         title: cont.title,
@@ -86,8 +85,7 @@ function Share() {
     });
     
 
-          console.log("Posting text:", title)
-      console.log("Posting image URL:", image)
+   
   }
 
   // function handleShare(cont) {

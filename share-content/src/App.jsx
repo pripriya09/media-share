@@ -20,7 +20,7 @@ function App() {
   }, []);
 
   const shareData = async (title, body) => {
-    const accessToken = "EAAHGb1E3XmIBO5xN8inq2PtfRzcjTgPC65YQ4gioMy9aQMlwEbK6OJU5KdC2wZA6zFwvDaN1rVHDbJqmyZCJJPlJ6a9V8l0oYK4TwiTbLPkb8x1xZCaMytgmAZCXBvUHaA1lc0zLF2uH1DUeKLm2ksUfQcrD8oX5Wmq9U5PhXP7ZAJTSgZBmHkaG9ZCgzZBCCvnGZA6UovW29iCa2VzGXYZC4RGlL43ZACoZCZCB0"; 
+    const accessToken = "EABzAnPLrCzcBOZBgWXYgBbTrfmDV9veU8LBnsJE4sUwoZC9dJWYe3UyhZBPMj8xnaPjvisLoGjRBEt564VVlAgcqjwQPZAKsnMatUdZAhnxITjwDCoN777ACSZCbNiUDvZCKq81twZBnEZBRt7FCLRggYcyzhsythRHxP7Bkfq2t8CvuZCtDIWQp9ZBEhJqZCcTfm7WCLMalp0Gp"; 
     const pageId = '428233347043737'; 
     const facebookGraphApiUrl = `https://graph.facebook.com/${pageId}/feed`;
 
