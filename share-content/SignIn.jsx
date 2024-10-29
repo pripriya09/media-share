@@ -1,0 +1,126 @@
+import { useState } from 'react';
+import React from 'react';
+import axios from 'axios';
+import { NavLink,useNavigate } from 'react-router-dom';
+
+
+function SignIn() {
+  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [cpassword, setCPassword] = useState("");
+  const [passwordError, setPasswordError] = useState(null);
+  const [isUpdateRegister, setIsUpdateRegister] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    setPasswordError(null);
+    setIsUpdateRegister(null);
+
+    if (password !== cpassword) {
+      setPasswordError("Passwords do not match");
+      return;
+    }
+    setLoading(true);
+
+    axios.post("http://localhost:8006/auth/register", {
+      name,
+      username,
+      email,
+      password,
+    })
+    .then((res) => {
+      setLoading(false);
+      if (res.status === 200 && res.data === true) {
+        navigate("/"); // Redirect to home page on success
+        setIsUpdateRegister("Registration successful. Now open the login page.");
+      }
+    })
+    .catch((err) => {
+      setLoading(false);
+      console.error(err);
+      const message = err.response?.data?.message || "Registration failed. Please try again.";
+      setIsUpdateRegister(message);
+    });
+  }
+
+  return (
+    <div id='wrapper'>
+      {isUpdateRegister && <p className='alter'>{isUpdateRegister}</p>}
+      <h2>Form Registration</h2>
+      <form onSubmit={handleSubmit}>
+        <div className='formregister'>
+          <label htmlFor="name">Name</label>
+          <input
+            type="text"
+            name="name"
+            placeholder='Enter your name'
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+        </div>
+        <div className='formregister'>
+          <label htmlFor="username">Username</label>
+          <input
+            type="text"
+            name="username"
+            placeholder='Enter username'
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
+        </div>
+        <div className='formregister'>
+          <label htmlFor="email">Email</label>
+          <input
+            type="email"
+            name="email"
+            placeholder='Enter email'
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
+        <div className='formregister'>
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            name="password"
+            placeholder='Enter your password'
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
+        <div className='formregister'>
+          <label htmlFor="cpassword">Confirm Password</label>
+          <input
+            type="password"
+            name="cpassword"
+            placeholder='Confirm password'
+            value={cpassword}
+            onChange={(e) => setCPassword(e.target.value)}
+            required
+          />
+          {passwordError && <p style={{ color: 'red' }}>{passwordError}</p>}
+        </div>
+        <button type="submit" disabled={loading}>
+          {loading ? 'Registering...' : 'Submit'}
+        </button>
+      </form><br/>
+      <div className="formregister">
+        <NavLink to='/'>
+        <a href="">Already Have Account</a>
+        </NavLink>
+       
+      </div>
+
+    </div>
+  );
+}
+
+export default SignIn;

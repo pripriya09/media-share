@@ -42,3 +42,14 @@ If you plan to automate posting based on events (e.g., when new content is uploa
 Conclusion
 Local Development: It’s perfectly fine to use localhost for connecting your frontend and backend while developing and testing your automation flow.
 Transition to Production: Once you're ready for production, make sure to change your API endpoints to a publicly accessible URL, which will allow you to automate posting to Facebook reliably. -->
+
+
+
+
+
+
+
+<!-- https://x.com/tgsane23 -->
+<!-- https://www.facebook.com/profile.php?id=61566503404677 -->
+
+<!-- https://developers.facebook.com/tools/explorer/8093079670819639/?method=GET&path=431561330043088%2Ffeed&version=v21.0 -->
