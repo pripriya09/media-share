@@ -1,3 +1,4 @@
+// uploadShare.js is frontent(share-content) ,share.jsx file
 import express from "express";
 import cors from "cors"
 import multer from "multer";
