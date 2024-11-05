@@ -13,6 +13,7 @@ function AutoPostApp() {
     e.preventDefault();
     if (!username || !password) {
       setIsUpdateRegister("Username and password are required");
+      alert("Username and password are required")
       return;
     }
  setLoading(true); 
@@ -24,15 +25,16 @@ function AutoPostApp() {
     .then((res) => {
       if (res.data) {
         setLoading(false);
-        window.location.href = "/share";
+        window.location.href = "/home";
       } else {
         setIsUpdateRegister("Invalid username/password");
       }
     })
     .catch((error) => {
-      setLoading(false);
+      setLoading(false); 
       console.error("Error during login:", error);
       setIsUpdateRegister("Internal Server Error");
+      alert("this user is not valid please have a account and login")
     });
   }
   return (

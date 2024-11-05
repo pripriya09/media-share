@@ -11,6 +11,7 @@ function SignIn() {
   const [password, setPassword] = useState("");
   const [cpassword, setCPassword] = useState("");
   const [passwordError, setPasswordError] = useState(null);
+  const [role, setRole] =useState("");
   const [isUpdateRegister, setIsUpdateRegister] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -31,6 +32,7 @@ function SignIn() {
       username,
       email,
       password,
+      role,
     })
     .then((res) => {
       setLoading(false);
@@ -107,6 +109,16 @@ function SignIn() {
             required
           />
           {passwordError && <p style={{ color: 'red' }}>{passwordError}</p>}
+        </div>
+        <div className="formregister">
+          <label htmlFor="role">Role</label>
+          <select name="role" id="role" value={role} onChange={(e)=>setRole(e.target.value)}>
+            <option value="role">Select Role</option>
+            <option value="super-admin">Super Admin</option>
+            <option value="admin">Admin</option>
+            <option value="agent">Agent</option>
+
+          </select>
         </div>
         <button type="submit" disabled={loading}>
           {loading ? 'Registering...' : 'Submit'}

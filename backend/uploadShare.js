@@ -85,6 +85,15 @@ app.get("/upload", async (req, res) => {
   }
 });
 
+app.get("/myPosts", async (req, res) => {
+  try {
+    const posts = await dataContent.find();
+    res.status(200).json(posts);
+  } catch (err) {
+    res.status(400).json({ error: "Error fetching posts", details: err });
+  }
+});
+
 app.post("/postOnFB", async (req, res) => {
   const { title, image } = req.body;
   const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;

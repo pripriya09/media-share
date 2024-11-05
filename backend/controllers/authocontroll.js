@@ -21,6 +21,11 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  role: {
+    type: String,
+    enum: ['superAdmin', 'admin', 'agent'], 
+    default: 'user', 
+  },
 });
 
 const UserModel = mongoose.model('user', UserSchema);
@@ -42,6 +47,7 @@ router.post('/register', async (req, res) => {
     username,
     email,
     password: hashedpass,
+    role: req.body.role || 'user',
   });
 
   try {
@@ -75,8 +81,10 @@ router.post('/login', async (req, res) => {
 
   if (isUserValid) {
     res.send(true);
+ 
   } else {
     res.send(false);
+    
   }
 });
 

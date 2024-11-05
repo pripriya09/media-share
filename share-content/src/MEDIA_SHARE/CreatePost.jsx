@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./share.css"; 
+import { NavLink,useNavigate  } from 'react-router-dom';
 
-function Share() {
+function CreatePost() {
   const [contendData, setContentData] = useState([]);
   const [title, setTitle] = useState(""); 
   const [image, setImage] = useState(null); 
@@ -33,17 +34,18 @@ function Share() {
       })
       .then((res) => {
         console.log("Upload response:", res.data);
-        setContentData((prevData) => [res.data, ...prevData])
+        setContentData((prevData) => [{ ...res.data }, ...prevData]);
         setTitle(""); 
-        setImage(null); 
+        setImage(null);
       })
       .catch((err) => {
         console.error("Error submitting content:", err);
       });
   }
-
+  const navigate = useNavigate();
   function handleOut(){
-window.location.href = "/";
+// window.location.href = "/";
+navigate("/"); 
   }
  
   function fetchContent() {
@@ -148,6 +150,7 @@ const groupPost = async (cont) => {
   try {
     await handleShare(cont);
     await postToInstagram(cont);
+    setContentData((prevData) => prevData.filter(item => item.title !== cont.title));
   } catch (error) {
 
     alert(`Error sharing ${cont.title}. Please check the console for details.`);
@@ -174,7 +177,7 @@ const groupPost = async (cont) => {
       <button onClick={handleOut}> LOG OUT</button>
 
      
-      <div className="item">
+      {/* <div className="item">
         <h1>Posts</h1>
         <div className="share-item">
           {contendData.map((cont, ind) => (
@@ -184,7 +187,7 @@ const groupPost = async (cont) => {
                 src={cont.image} 
                 alt={cont.title}
                 style={{ width: "100px", height: "100px" }}
-              />
+              /> */}
                {/* <label>
                 <input
                   type="checkbox"
@@ -193,18 +196,20 @@ const groupPost = async (cont) => {
                 />
                 Share on FB
               </label> */}
+              <NavLink to="/home/myPost" >
               <button onClick={() => handleShare(cont)}>Share on FB</button> 
               <button onClick={() => postToInstagram(cont)}>Share on in</button> 
               <br/>
               <button onClick={() =>groupPost(cont)}>Share FB/IG</button> 
 
-              
+              </NavLink>
 
-            </div>
+            {/* </div>
           ))}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
-export default Share;
+export default CreatePost;
+
