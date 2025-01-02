@@ -114,7 +114,7 @@ function SignIn() {
           <label htmlFor="role">Role</label>
           <select name="role" id="role" value={role} onChange={(e)=>setRole(e.target.value)}>
             <option value="role">Select Role</option>
-            <option value="super-admin">Super Admin</option>
+            <option value="superAdmin">Super Admin</option>
             <option value="admin">Admin</option>
             <option value="agent">Agent</option>
 

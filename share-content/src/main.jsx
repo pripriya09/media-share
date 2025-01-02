@@ -6,6 +6,7 @@ import { createRoot } from 'react-dom/client'
 // import Share from './Share.jsx'
 // import AutoPostApp from './AutoPostApp.jsx'
 import AppRoutes from './MEDIA_SHARE/AppRoutes';
+// import TwoFactorSetup from './MEDIA_SHARE/TwoFactorSetup';
 
 
 
@@ -14,6 +15,7 @@ createRoot(document.getElementById('root')).render(
   <>
 
 <AppRoutes/>
+{/* <TwoFactorSetup/> */}
   {/* <App/> */}
    {/* <Content/> */}
    {/* <AutoPostApp/> */}

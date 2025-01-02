@@ -53,3 +53,29 @@ Transition to Production: Once you're ready for production, make sure to change 
 <!-- https://www.facebook.com/profile.php?id=61566503404677 -->
 
 <!-- https://developers.facebook.com/tools/explorer/8093079670819639/?method=GET&path=431561330043088%2Ffeed&version=v21.0 -->
+
+
+<!-- [ -->
+
+<!-- twitter app name before AutoPostApp is????/--------------------------- -->
+<!-- //1841819777217474560tgsane23 -->
+<!-- ----------------------------------------------------------] -- ngrok config add-authtoken 2oSr2QHGgHas6HL8EazKFCLd69u_2KCtoSThErG4FjZ41EY2Y
+ngrok http http://localhost:8080
+
+
+- config/
+   ├── cloudinary.js
+   ├── database.js
+- controllers/
+   ├── authController.js
+   ├── postController.js
+- models/
+   ├── Content.js
+   ├── User.js
+- routes/
+   ├── authRoutes.js
+   ├── postRoutes.js
+- .env
+- uploadShare.js
+
+

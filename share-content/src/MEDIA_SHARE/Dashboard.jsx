@@ -6,7 +6,11 @@ function Dashboard() {
   return (<>
     {/* <div>Dashboard</div> */}
     <div className="option">
-      <ul>
+    <ul>
+        <li><NavLink to="loginmedia">LogMedia</NavLink></li>
+      </ul>
+      
+    <ul>
         <li><NavLink to="createPost">CreatePost</NavLink></li>
       </ul>
       <ul>

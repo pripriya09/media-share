@@ -246,6 +246,7 @@ button:hover {
     border-radius: 6px;
     object-fit: cover;
   }
+
   
   @media (max-width: 768px) {
     .my-posts li {
